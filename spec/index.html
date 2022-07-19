@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>
+		Borderless display mode
+	</title>
+	<script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" defer></script>
+	<script class="remove">
+		// All config options at https://respec.org/docs/
+		var respecConfig = {
+			specStatus: "CG-DRAFT",
+			editors: [{
+				name: "Sonja Laurila",
+				url: "https://github.org/sonkkeli",
+				company: "Google",
+				companyURL: "https://www.google.com"
+			}],
+			github: "sonkkeli/borderless",
+			shortName: "borderless-mode",
+			xref: {
+				profile: "web-platform",
+				specs: [
+					"appmanifest",
+					"cssom-view",
+					"geometry-1",
+					"manifest-incubations",
+					"MEDIAQUERIES-5",
+					"window-controls-overlay"
+				]
+			},
+			group: "wicg",
+		};
+	</script>
+</head>
+
+<body>
+	<section id="abstract">
+		<p>
+			This document specifies a set of technologies that allow a Web
+			developer to take control over the whole area that would generally be
+			occupied by the title bar in an [=Isolated Web App=] running on ChromeOS.
+			This mode is known as Borderless mode.
+		</p>
+	</section>
+	<section id="sotd">
+		<p>
+			This draft is meant to serve as a starting point for the
+			standardization process of Borderless mode and the technologies described in it
+			might be migrated to other specifications on different working groups.
+		</p>
+	</section>
+	<section class="informative">
+		<h2>
+			Introduction
+		</h2>
+		<p>
+			Applications targeting non-mobile devices are hosted within frames that
+			commonly have a title bar. A title bar is a UI element generally
+			represented as a horizontal bar at the top of a window, bearing the
+			name of the active program or the name of the current active document
+			and and the [=window controls=]. Modern [=Isolated Web App=] applications can take advantage
+			of the area in the title bar in order to display UI content to create a
+			better UX.
+		</p>
+		<p>
+			For installed web apps hosted within a user agent (UA) frame, it is
+			possible to get some form of customization in the frame by declaring
+			which type of [=display mode=] is preferred. Developers can select the mode
+			that best meets the needs of the application via the [=manifest=]
+			file's `<code>[=manifest/display=]</code>` or <code>[=manifest/display_override=]</code> member. However, these
+			modes are limited and do not provide the same level of control over the title bar,
+			therefore developers looking to create a completely seamless, native-like title bar
+			for their installed application can't achieve this with the aforementioned
+			members. The next most native-looking other <code>[=manifest/display_override=]</code> value is
+			<code>[=display mode/window-controls-overlay=]</code>, which however still has the [=window controls=]
+			out of the control of the web developer.
+		<p>
+			Together with the [=Additional Window Controls=] API, Borderless mode will
+			provide web developers the full control of the appearance of their app,
+			including the style of the title bar.
+		</p>
+		<section>
+			<h3>
+				Example
+			</h3>
+			<aside class="example">
+				<pre class="css">
+					body {
+						background: blue;
+					}
+					@media (display-mode: borderless) {
+						body {
+							background: red;
+						}
+					}
+					#draggable {
+						app-region: drag;
+						position: absolute;
+						top: 100px;
+						left: 100px;
+						height: 10px;
+						width: 10px;
+					}
+				</pre>
+				<pre class="html">
+					&lt;div class="draggable"&gt;
+						Hello from the custom title bar!
+					&lt;div&gt;
+				</pre>
+			</aside>
+		</section>
+	</section>
+	<section>
+		<h2>
+			Concepts
+		</h2>
+		<ul>
+			<li>
+				<!--This could be removed if the explanation on WCO would be exported but maybe it's better to duplicate it-->
+				<dfn data-lt="controls of the window">Window controls</dfn>:
+				interface elements that the operating system uses consistently across
+				applications to enable the user to perform certain actions to control
+				the application. Common actions in the [=window controls=] include
+				minimize, maximize/restore, and close buttons.
+			</li>
+			<li>
+				<dfn>Additional Window Controls</dfn>: feature to replace [=window controls=]
+				by calling the minimize/maximize/close etc APIs directly without the
+				need to use browser's native window controls.
+			</li>
+			<li>
+				<dfn data-lt="IWA">Isolated Web App</dfn>: feature for installed and signed web
+				applications which are packaged as Web Bundles instead of being
+				hosted on live web servers and fetched over HTTPS.
+				More: https://github.com/WICG/isolated-web-apps
+			</li>
+		</ul>
+	</section>
+	<section>
+		<h2>
+			Addition of new <code>[=display mode/borderless=] [=display mode=]</code>
+		</h2>
+		<p>
+			This specification defines the following [=display mode=]:
+		</p>
+		<dl>
+			<dt>
+				<dfn data-export="" data-dfn-for="display mode">
+					borderless
+				</dfn>
+			</dt>
+			<dd>
+				The web application opens without any title bar or native OS
+				[=window controls=] visible and with the web contents extended to the
+				whole title bar area. The app will also be able to specify
+				[=draggable regions=] in the web contents to create a customized title bar.
+			</dd>
+		</dl>
+		<p>
+			The <code>[=display mode/borderless=]</code>
+			[=display mode=] can be specified in the
+			<code>[=manifest/display_override=]</code> member of the manifest.
+		</p>
+		<aside class="issue">
+			<p>
+				TO DO: This is draft text for features that might belong in other
+				specifications. This document might not be the final venue for some
+				of the work specified in this draft. (manifest/manifest incubations)
+			</p>
+		</aside>
+	</section>
+	<section>
+		<h2>
+			Defining <dfn>draggable regions</dfn>
+		</h2>
+		<p>
+			To define which regions or elements in the title bar are draggable,
+			this specification defines the CSS <code><dfn>app-region</dfn></code> property.
+		</p>
+		<aside class="issue">
+			<p>
+				TO DO: This is draft text for features that might belong in other
+				specifications. This document might not be the final venue for some
+				of the work specified in this draft. (CSS)
+			</p>
+		</aside>
+		<aside class="issue">
+			<p>
+				TO DO: List possible values for app-region.
+			</p>
+		</aside>
+	</section>
+	<section>
+		<h2>
+			Integration with CSSOM
+		</h2>
+		<p>
+			This specification integrates with the [[cssom-view]] specification by
+			patching the [=Window/resize=] viewport event.
+		</p>
+		<p>
+			After step 1 of <a href="https://www.w3.org/TR/cssom-view-1/#run-the-resize-steps">resize</a>
+			algorithm, update the size of the elements with [=app-region=] CSS property.
+		</p>
+	</section>
+	<section>
+		<h2>
+			Security and privacy considerations
+		</h2>
+		<section>
+			<h3>
+				Security
+			</h3>
+			<section>
+				<h4>
+					Spoofing risks
+				</h4>
+				<p>
+					Giving sites partial control of the title bar leaves room for
+					developers to spoof content in what was previously a trusted,
+					UA-controlled region. To mitigate the threat of spoofing, the feature
+					is (at least for now) only targeted to be available for
+					[=Isolated Web Apps=] and users will have to opt-in to the feature via
+					a window management permission prompt and via admins’ force-installed
+					apps policy. The title bar can be returned via App settings by
+					toggling off the borderless mode capability. The origin will also be
+					shown in the App settings.
+				</p>
+			</section>
+			<section>
+				<h4>
+					Out-of-scope Navigation
+				</h4>
+				<p>
+					There are two already existing security limitations which affect
+					applications being in borderless mode:
+				<ol>
+					<li>
+						<b>Installed web apps (PWAs)</b>: an indicator of
+						when a user has left the declared scope of the app. When a user
+						navigates out of scope, a black bar appears between the title bar and
+						the web content, and it includes the following information:
+						<ul>
+							<li>
+								A close button to allow users to easily navigate back into scope.
+							</li>
+							<li>
+								A security icon which opens the security info popup when clicked.
+							</li>
+							<li>
+								The origin and title of the site.
+							</li>
+							<li>
+								In borderless mode, if a user navigates out-of-scope the web app
+								will revert to standalone display mode (with a standalone title bar).
+								When the user navigates back into scope, the standalone title bar
+								will be removed again and the borderless mode enabled.
+							</li>
+						</ul>
+					</li>
+					<li>
+						<b>[=Isolated Web Apps=]</b>: Opening external links is completely
+						prevented and any links going out of scope of the app are opened
+						in the default browser of the user.
+					</li>
+				</ol>
+				</p>
+			</section>
+			<section>
+				<h4>
+					Opening a popup from a borderless IWA
+				</h4>
+				<ul>
+					<li>Opening a popup to any other origin → The popup won't be in
+						borderless mode (security risk if the following pop-up app would be
+						malicious).
+					</li>
+					<li>
+						Opening a popup to itself (same origin) → The popup opens in
+						borderless mode, because the app has already got the permission to
+						run in borderless mode.
+					</li>
+				</ul>
+			</section>
+		</section>
+		<section>
+			<h3>
+				Privacy
+			</h3>
+			<p>TODO</p>
+		</section>
+	</section>
+	<section class="appendix informative" id="acknowledgments">
+		<h2>
+			Acknowledgments
+		</h2>
+		<p></p>
+	</section>
+	<section id="conformance"></section>
+</body>
+
+</html>
