@@ -1,0 +1,61 @@
+button {
+    background-color: lightgray;
+    border-radius: 4px;
+    border: none;
+    padding: 10px;
+}
+
+#titlebar {
+    display: block;
+    position: fixed;
+    background: #254053;
+    color: #FFFFFF;
+    
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 33px;
+    touch-action: none;
+  }
+
+  body {
+    /*font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    margin: 4rem 2rem;
+    background: blue;
+    color: white;
+  }
+  
+  @media (display-mode: borderless) {
+    /*This will override the before-set background color if borderless mode is enabled.*/
+    
+    body {
+      background: #1A2933;
+    }
+  }
+  
+  #titlebar #drag-region {
+    width: 100%;
+    height: 100%;
+    -webkit-app-region: drag;
+    display: grid;
+    grid-template-columns: auto 138px;
+  }
+  #window-title {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    overflow: hidden;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 12px;
+  }
+  
+  #window-title span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.5;
+  }

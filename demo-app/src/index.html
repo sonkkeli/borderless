@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Hello world</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="index.js" defer></script>
+
+  <!-- webpackIgnore: true -->
+  <link rel="manifest" href="manifest.webmanifest">
+</head>
+
+<body>
+  <header id="titlebar">
+    <div id="drag-region">
+      <div id="window-title">
+        <span>Borderless Isolated PWA</span>
+      </div>
+    </div>
+  </header>
+
+  <button type="button" id="hello-btn">click me</button>
+
+  <section id="window-placement">
+    <h2>
+      Granting window-placement permission
+    </h2>
+    <button id="window-placement-btn" type="button">
+      Grant
+    </button>
+  </section>
+</body>
+
+</html>

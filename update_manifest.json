@@ -1,0 +1,8 @@
+{
+  "versions": [
+    {
+      "version": "1.0.0",
+      "src": "https://github.com/sonkkeli/borderless/raw/main/webpack.swbn"
+    }
+  ]
+}
