@@ -325,7 +325,7 @@ could also be something considered to implement later on if seen necessary.
 
 Flags to enable:
 
-- <span style="text-decoration:underline;">chrome://flags#enable-desktop-pwas-borderless</span>
+- <span style="text-decoration:underline;">chrome://flags#enable-desktop-pwas-borderless</span> (Linux/ChromeOS only for current prototype)
 - <span style="text-decoration:underline;">chrome://flags#enable-isolated-web-apps</span>
 - Put https://borderless-example.glitch.me in
   <span style="text-decoration:underline;">chrome://flags#isolated-app-origins</span>
