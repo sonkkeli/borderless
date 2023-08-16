@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build:webpack && cp ./dist/webpack.swbn ../webpack.swbn",
     "build:rollup": "rollup -c",
     "build:webpack": "webpack",
     "serve": "http-server ./src"
