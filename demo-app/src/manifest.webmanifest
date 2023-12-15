@@ -2,12 +2,13 @@
   "id": "/",
   "scope": "/",
   "start_url": "/",
-  "name": "Simple borderless IWA",
+  "name": "Borderless IWA with AWC demo",
   "version": "1.0.0",
   "display": "standalone",
   "display_override": ["borderless"],
   "permissions_policy": {
-    "window-placement": ["self"],
+    "window-management": ["self"],
+    "fullscreen": ["self"],
     "cross-origin-isolated": ["self"]
   },
   "isolated_storage": true,
